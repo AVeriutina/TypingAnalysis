@@ -122,6 +122,29 @@ struct CEngLocale {
     static constexpr const char* Save = "Save";
     static constexpr const char* Load = "Load";
   };
+
+  struct CFingerLayoutSettings {
+    static constexpr const char* WindowTitle = "Fingers Layout";
+    static constexpr const char* Ok = "OK";
+    static constexpr const char* Reset = "Reset";
+    static constexpr const char* Cancel = "Cancel";
+    static constexpr const char* LeftThumb = "L\nThumb";
+    static constexpr const char* LeftIndex = "L\nIndex";
+    static constexpr const char* LeftMiddle = "L\nMiddle";
+    static constexpr const char* LeftRing = "L\nRing";
+    static constexpr const char* LeftPinky = "L\nPinky";
+    static constexpr const char* RightThumb = "R\nThumb";
+    static constexpr const char* RightIndex = "R\nIndex";
+    static constexpr const char* RightMiddle = "R\nMiddle";
+    static constexpr const char* RightRing = "R\nRing";
+    static constexpr const char* RightPinky = "R\nPinky";
+    static constexpr const char* Backspace = "Back";
+    static constexpr const char* Tab = "Tab";
+    static constexpr const char* Caps = "Caps";
+    static constexpr const char* Enter = "Enter";
+    static constexpr const char* Shift = "Shift";
+    static constexpr const char* Ctrl = "Ctrl";
+  };
 };
 
 } // namespace NSLocal

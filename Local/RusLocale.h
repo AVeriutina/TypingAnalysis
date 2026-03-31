@@ -131,6 +131,29 @@ struct CRusLocale {
     static constexpr const char* Save = "Сохранить";
     static constexpr const char* Load = "Загрузить";
   };
+
+  struct CFingerLayoutSettings {
+    static constexpr const char* WindowTitle = "Раскладка пальцев";
+    static constexpr const char* Ok = "OK";
+    static constexpr const char* Reset = "Сбросить";
+    static constexpr const char* Cancel = "Отмена";
+    static constexpr const char* LeftThumb = "Л\nБольш";
+    static constexpr const char* LeftIndex = "Л\nУказ";
+    static constexpr const char* LeftMiddle = "Л\nСредн";
+    static constexpr const char* LeftRing = "Л\nБезым";
+    static constexpr const char* LeftPinky = "Л\nМизин";
+    static constexpr const char* RightThumb = "П\nБольш";
+    static constexpr const char* RightIndex = "П\nУказ";
+    static constexpr const char* RightMiddle = "П\nСредн";
+    static constexpr const char* RightRing = "П\nБезым";
+    static constexpr const char* RightPinky = "П\nМизин";
+    static constexpr const char* Backspace = "Назад";
+    static constexpr const char* Tab = "Tab";
+    static constexpr const char* Caps = "Caps";
+    static constexpr const char* Enter = "Enter";
+    static constexpr const char* Shift = "Shift";
+    static constexpr const char* Ctrl = "Ctrl";
+  };
 };
 
 } // namespace NSLocal

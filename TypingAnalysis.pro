@@ -95,6 +95,13 @@ DEFINES += $$CONAN_DEFINES_BOOST
 
 
 HEADERS += \
+  Fingers/Coordinates.h \
+  Fingers/FingerLayoutController.h \
+  Fingers/FingerLayoutModule.h \
+  Fingers/FingerLayoutState.h \
+  Fingers/FingerLayoutView.h \
+  Fingers/FLModule.h \
+  Fingers/StyleSheet.h \
   AppDebug/PerformanceLogger.h \
   Compute/CudaDefines.h \
   Compute/Functions.h \
@@ -211,6 +218,10 @@ HEADERS += \
   TimerAccess.h
 
 SOURCES += \
+  Fingers/FingerLayoutController.cpp \
+  Fingers/FingerLayoutModule.cpp \
+  Fingers/FingerLayoutView.cpp \
+  Fingers/FLModule.cpp \
   AppDebug/PerformanceLogger.cpp \
   Compute/Functions.cpp \
   Compute/Math.cpp \

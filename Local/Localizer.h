@@ -429,6 +429,122 @@ private:
   QString Undefined_;
 };
 
+class CFingerLayoutLocalizer {
+public:
+  template<class TFingerLayoutLocale>
+  static CFingerLayoutLocalizer make() {
+    return CFingerLayoutLocalizer(
+        NSLocalizerDetail::Data<TFingerLayoutLocale>());
+  }
+
+  const QString& windowTitle() const {
+    return WindowTitle_;
+  }
+  const QString& ok() const {
+    return Ok_;
+  }
+  const QString& reset() const {
+    return Reset_;
+  }
+  const QString& cancel() const {
+    return Cancel_;
+  }
+  const QString& leftThumb() const {
+    return LeftThumb_;
+  }
+  const QString& leftIndex() const {
+    return LeftIndex_;
+  }
+  const QString& leftMiddle() const {
+    return LeftMiddle_;
+  }
+  const QString& leftRing() const {
+    return LeftRing_;
+  }
+  const QString& leftPinky() const {
+    return LeftPinky_;
+  }
+  const QString& rightThumb() const {
+    return RightThumb_;
+  }
+  const QString& rightIndex() const {
+    return RightIndex_;
+  }
+  const QString& rightMiddle() const {
+    return RightMiddle_;
+  }
+  const QString& rightRing() const {
+    return RightRing_;
+  }
+  const QString& rightPinky() const {
+    return RightPinky_;
+  }
+  const QString& backspace() const {
+    return Backspace_;
+  }
+  const QString& tab() const {
+    return Tab_;
+  }
+  const QString& caps() const {
+    return Caps_;
+  }
+  const QString& enter() const {
+    return Enter_;
+  }
+  const QString& shift() const {
+    return Shift_;
+  }
+  const QString& ctrl() const {
+    return Ctrl_;
+  }
+
+private:
+  template<class TFingerLayoutLocale>
+  CFingerLayoutLocalizer(NSLocalizerDetail::Data<TFingerLayoutLocale>)
+      : WindowTitle_(TFingerLayoutLocale::WindowTitle),
+        Ok_(TFingerLayoutLocale::Ok),
+        Reset_(TFingerLayoutLocale::Reset),
+        Cancel_(TFingerLayoutLocale::Cancel),
+        LeftThumb_(TFingerLayoutLocale::LeftThumb),
+        LeftIndex_(TFingerLayoutLocale::LeftIndex),
+        LeftMiddle_(TFingerLayoutLocale::LeftMiddle),
+        LeftRing_(TFingerLayoutLocale::LeftRing),
+        LeftPinky_(TFingerLayoutLocale::LeftPinky),
+        RightThumb_(TFingerLayoutLocale::RightThumb),
+        RightIndex_(TFingerLayoutLocale::RightIndex),
+        RightMiddle_(TFingerLayoutLocale::RightMiddle),
+        RightRing_(TFingerLayoutLocale::RightRing),
+        RightPinky_(TFingerLayoutLocale::RightPinky),
+        Backspace_(TFingerLayoutLocale::Backspace),
+        Tab_(TFingerLayoutLocale::Tab),
+        Caps_(TFingerLayoutLocale::Caps),
+        Enter_(TFingerLayoutLocale::Enter),
+        Shift_(TFingerLayoutLocale::Shift),
+        Ctrl_(TFingerLayoutLocale::Ctrl) {
+  }
+
+  QString WindowTitle_;
+  QString Ok_;
+  QString Reset_;
+  QString Cancel_;
+  QString LeftThumb_;
+  QString LeftIndex_;
+  QString LeftMiddle_;
+  QString LeftRing_;
+  QString LeftPinky_;
+  QString RightThumb_;
+  QString RightIndex_;
+  QString RightMiddle_;
+  QString RightRing_;
+  QString RightPinky_;
+  QString Backspace_;
+  QString Tab_;
+  QString Caps_;
+  QString Enter_;
+  QString Shift_;
+  QString Ctrl_;
+};
+
 class CFileMenuLocalizer {
 public:
   template<class TFileMenuLocale>
@@ -493,6 +609,10 @@ public:
     return FileMenuLocalizer_;
   }
 
+  const CFingerLayoutLocalizer& getFingerLayoutLocalizer() const {
+    return FingerLayoutLocalizer_;
+  }
+
 private:
   template<class TLocale>
   CLocalizer(NSLocalizerDetail::Data<TLocale>)
@@ -509,7 +629,9 @@ private:
         KeySchemePlotterLocalizer_(CKeySchemePlotterLocalizer::make<
                                    typename TLocale::CKeySchemePlotter>()),
         FileMenuLocalizer_(
-            CFileMenuLocalizer::make<typename TLocale::CFileMenu>()) {
+            CFileMenuLocalizer::make<typename TLocale::CFileMenu>()),
+        FingerLayoutLocalizer_(CFingerLayoutLocalizer::make<
+                               typename TLocale::CFingerLayoutSettings>()) {
   }
   CSeanceViewLocalizer SeanceViewLocalizer_;
   CStatisticsViewLocalizer StatisticsViewLocalizer_;
@@ -518,6 +640,7 @@ private:
   CSpeedPlotterLocalizer SpeedPlotterLocalizer_;
   CKeySchemePlotterLocalizer KeySchemePlotterLocalizer_;
   CFileMenuLocalizer FileMenuLocalizer_;
+  CFingerLayoutLocalizer FingerLayoutLocalizer_;
 };
 
 } // namespace NSLocal

@@ -63,6 +63,12 @@ void CLocalizationModuleImpl::subscribeToFileMenuLocalizer(
   FileMenuLocalizerOutput_.subscribe(obs);
 }
 
+void CLocalizationModuleImpl::subscribeToFingerLayoutLocalizer(
+    CFingerLayoutLocalizerObserver* obs) {
+  assert(obs);
+  FingerLayoutLocalizerOutput_.subscribe(obs);
+}
+
 void CLocalizationModuleImpl::notifyAll() {
   SeanceViewLocalizerOutput_.notify();
   StatistiscViewLocalizerOutput_.notify();
@@ -71,6 +77,7 @@ void CLocalizationModuleImpl::notifyAll() {
   SpeedPlotterLocalizerOutput_.notify();
   KeySchemePlotterLocalizerOutput_.notify();
   FileMenuLocalizerOutput_.notify();
+  FingerLayoutLocalizerOutput_.notify();
 }
 
 CLocalizationModuleImpl::CSeanceViewLocalizerObservable
@@ -120,6 +127,13 @@ CLocalizationModuleImpl::CFileMenuLocalizerObservable
 CLocalizationModuleImpl::makeFileMenuLocalizer() {
   return CFileMenuLocalizerObservable([this]() -> CFileMenuGetType {
     return Localizer_.getFileMenuLocalizer();
+  });
+}
+
+CLocalizationModuleImpl::CFingerLayoutLocalizerObservable
+CLocalizationModuleImpl::makeFingerLayoutLocalizer() {
+  return CFingerLayoutLocalizerObservable([this]() -> CFingerLayoutGetType {
+    return Localizer_.getFingerLayoutLocalizer();
   });
 }
 } // namespace NSLocalizationModuleDetail
