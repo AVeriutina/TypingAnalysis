@@ -188,9 +188,9 @@ CFingerLayout::CKeyPositionContainer CFingerLayout::getDefaultLeftRing() {
 
 CFingerLayout::CKeyPositionContainer CFingerLayout::getDefaultLeftPinky() {
   return {CKeyPosEnum::AE01, CKeyPosEnum::AE02, CKeyPosEnum::AD01,
-          CKeyPosEnum::AC01, CKeyPosEnum::AB01, CKeyPosEnum::TLDE,
-          CKeyPosEnum::TAB,  CKeyPosEnum::CAPS, CKeyPosEnum::LFSH,
-          CKeyPosEnum::LCTL};
+          CKeyPosEnum::AC01, CKeyPosEnum::AB01, CKeyPosEnum::LSGT,
+          CKeyPosEnum::TLDE, CKeyPosEnum::TAB,  CKeyPosEnum::CAPS,
+          CKeyPosEnum::LFSH, CKeyPosEnum::LCTL};
 }
 
 CFingerLayout::CKeyPositionContainer CFingerLayout::getDefaultRightThumb() {

@@ -3,6 +3,7 @@
 #include "FingerLayoutController.h"
 #include "FingerLayoutModule.h"
 #include "FingerLayoutView.h"
+#include "Local/LocalizationModule.h"
 
 #include <QMainWindow>
 
@@ -18,6 +19,7 @@ public:
 
 private:
   std::unique_ptr<QMainWindow> MainWindow_;
+  NSLocal::CLocalizationModule LocalizationModule_;
   CFingerLayoutModule FingerLayout_;
   CFingerLayoutView FingerLayoutView_;
   CFingerLayoutController FingerLayoutController_;

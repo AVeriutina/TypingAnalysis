@@ -61,6 +61,8 @@ CKeyPosition CKeyPositionWin::make(CVKCode VK, USHORT MakeCode, USHORT Flag) {
     case 83:
       result = CKeyPosEnum::DELE;
       break;
+    case 86:
+      result = CKeyPosEnum::LSGT;
     case 91:
       result = CKeyPosEnum::LWIN;
       break;

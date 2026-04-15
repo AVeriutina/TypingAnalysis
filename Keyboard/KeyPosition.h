@@ -11,7 +11,6 @@ struct CKeyPosEnum {
     IGNR = 1,
     // TO DO
     // Make continuous numeration from 8
-    // Add OEM_102 Key
     ESC = 9,
     AE01 = 10,
     AE02 = 11,
@@ -103,6 +102,7 @@ struct CKeyPosEnum {
     KP3 = 89,
     kP0 = 90,
     kPDL = 91,
+    LSGT = 94,
     FK11 = 95,
     FK12 = 96,
     KPEN = 104,
