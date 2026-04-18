@@ -437,6 +437,9 @@ public:
         NSLocalizerDetail::Data<TFingerLayoutLocale>());
   }
 
+  const QString& settingsMenuTitle() const {
+    return SettingsMenuTitle_;
+  }
   const QString& windowTitle() const {
     return WindowTitle_;
   }
@@ -501,9 +504,9 @@ public:
 private:
   template<class TFingerLayoutLocale>
   CFingerLayoutLocalizer(NSLocalizerDetail::Data<TFingerLayoutLocale>)
-      : WindowTitle_(TFingerLayoutLocale::WindowTitle),
-        Ok_(TFingerLayoutLocale::Ok),
-        Reset_(TFingerLayoutLocale::Reset),
+      : SettingsMenuTitle_(TFingerLayoutLocale::SettingsMenu),
+        WindowTitle_(TFingerLayoutLocale::WindowTitle),
+        Ok_(TFingerLayoutLocale::Ok), Reset_(TFingerLayoutLocale::Reset),
         Cancel_(TFingerLayoutLocale::Cancel),
         LeftThumb_(TFingerLayoutLocale::LeftThumb),
         LeftIndex_(TFingerLayoutLocale::LeftIndex),
@@ -516,13 +519,12 @@ private:
         RightRing_(TFingerLayoutLocale::RightRing),
         RightPinky_(TFingerLayoutLocale::RightPinky),
         Backspace_(TFingerLayoutLocale::Backspace),
-        Tab_(TFingerLayoutLocale::Tab),
-        Caps_(TFingerLayoutLocale::Caps),
-        Enter_(TFingerLayoutLocale::Enter),
-        Shift_(TFingerLayoutLocale::Shift),
+        Tab_(TFingerLayoutLocale::Tab), Caps_(TFingerLayoutLocale::Caps),
+        Enter_(TFingerLayoutLocale::Enter), Shift_(TFingerLayoutLocale::Shift),
         Ctrl_(TFingerLayoutLocale::Ctrl) {
   }
 
+  QString SettingsMenuTitle_;
   QString WindowTitle_;
   QString Ok_;
   QString Reset_;

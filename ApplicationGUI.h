@@ -1,10 +1,12 @@
 #ifndef NSAPPLICATION_CAPPLICATIONGUI_H
 #define NSAPPLICATION_CAPPLICATIONGUI_H
 
+#include "Fingers/FLModule.h"
 #include "Interface/KeySchemePlotter.h"
 #include "Interface/LanguageMenu.h"
 #include "Interface/Plotter.h"
 #include "Interface/SeanceView.h"
+#include "Interface/SettingsMenu.h"
 #include "Interface/StatisticsView.h"
 #include "Interface/TextModeView.h"
 #include "Interface/TextPrinter.h"
@@ -28,6 +30,8 @@ class CApplicationGUI {
   using CFileMenu = NSInterface::CFileMenu;
   using CModifiersMenu = NSInterface::CModifiersMenu;
   using CLanguageMenu = NSInterface::CLanguageMenu;
+  using CSettingsMenu = NSInterface::CSettingsMenu;
+  using CFLModule = NSFingers::CFLModule;
 
 public:
   CApplicationGUI();
@@ -48,6 +52,8 @@ protected:
   CFileMenu FileMenu_;
   CModifiersMenu ModifiersMenu_;
   CLanguageMenu LanguageMenu_;
+  CSettingsMenu SettingsMenu_;
+  CFLModule FingerLayoutModule_;
 
 #ifdef KEYBOARD_HANDLER_DEBUG
   NSAppDebug::CKeyboardHandlerDebugOut KeyboardHandlerOut_ = mainWindow();

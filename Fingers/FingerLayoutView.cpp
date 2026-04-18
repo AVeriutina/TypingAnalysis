@@ -82,7 +82,6 @@ CFingerLayoutView::CFingerLayoutView(QMainWindow* window)
   CentralWidget_->setFixedSize(totalW, totalH);
   Window_->adjustSize();
   Window_->setFixedSize(Window_->size());
-  Window_->show();
 }
 
 CFingerLayoutView::CViewObserver* CFingerLayoutView::FingerLayoutInput() {

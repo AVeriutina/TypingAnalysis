@@ -38,14 +38,12 @@ struct CFingerLayoutPalette {
 
   QColor UnassignedKey = QColor(214, 214, 214);
 
-  // Key and button structural colors
   QColor KeyBorder = QColor(136, 136, 136);
   QColor ButtonText = QColor(40, 40, 40);
   QColor FingerBorderActive = QColor(34, 34, 34);
   QColor FingerBorderInactive = QColor(136, 136, 136);
   QColor ActionBorder = QColor(153, 153, 153);
 
-  // Layout toggle colors
   QColor ToggleActiveBg = QColor(21, 101, 192);
   QColor ToggleActiveBorder = QColor(13, 71, 161);
   QColor ToggleActiveText = QColor(255, 255, 255);

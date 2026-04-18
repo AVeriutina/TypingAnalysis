@@ -140,6 +140,10 @@ CFingerLayout CFingerLayout::getDefault() {
   return CFingerLayout(getDefaultLayout());
 }
 
+CFingerLayout CFingerLayout::make(CLayoutContainer layout) {
+  return CFingerLayout(std::move(layout));
+}
+
 CFinger CFingerLayout::find(CKeyPosition Position) const {
   for (const auto& FingerPair : Layout_) {
     if (FingerPair.second.count(Position) > 0)

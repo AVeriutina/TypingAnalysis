@@ -11,7 +11,8 @@ CApplicationGUI::CApplicationGUI()
       KeySchemePlotter_(AppWindow_.getKeySchemeParent()),
       FileMenu_(AppWindow_.getFileMenu()),
       ModifiersMenu_(AppWindow_.getModifiersMenuInit()),
-      LanguageMenu_(AppWindow_.getLanguageMenu()) {
+      LanguageMenu_(AppWindow_.getLanguageMenu()),
+      SettingsMenu_(AppWindow_.getSettingsMenu()) {
   // TO DO
   // should probably move this to CApplicationImpl or CApplication
   AppWindow_.show();

@@ -13,15 +13,18 @@ namespace NSUserDataModuleDetail {
 class CUserDataModuleImpl {
   using CFingerLayoutObserver = NSLibrary::CObserver<CFingerLayout>;
   using CFingerLayoutObservable = NSLibrary::CObservableData<CFingerLayout>;
+  using CFingerLayoutInput = NSLibrary::CColdInput<CFingerLayout>;
 
 public:
   CUserDataModuleImpl();
 
   void subscribeToFingerLayout(CFingerLayoutObserver* obs);
   void setFingerLayout(CFingerLayout&& FingerLayout);
+  CFingerLayoutObserver* fingerLayoutInput();
 
 private:
   CFingerLayoutObservable FingerLayoutOutput_;
+  CFingerLayoutInput FingerLayoutSetInput_;
 };
 
 } // namespace NSUserDataModuleDetail

@@ -114,6 +114,7 @@ HEADERS += \
   Interface/ModifiersModeController.h \
   Interface/Plotter.h \
   Interface/SeanceView.h \
+  Interface/SettingsMenu.h \
   Interface/SeanceViewController.h \
   Interface/SessionFlusher.h \
   Interface/StatisticsView.h \
@@ -237,6 +238,7 @@ SOURCES += \
   Interface/ModifiersModeController.cpp \
   Interface/Plotter.cpp \
   Interface/SeanceView.cpp \
+  Interface/SettingsMenu.cpp \
   Interface/SeanceViewController.cpp \
   Interface/SessionFlusher.cpp \
   Interface/StatisticsView.cpp \

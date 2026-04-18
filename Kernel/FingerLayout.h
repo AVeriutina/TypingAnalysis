@@ -85,14 +85,16 @@ private:
 
 class CFingerLayout {
   using CKeyPosEnum = NSKeyboard::CKeyPosEnum;
+
+public:
   using CKeyPosition = NSKeyboard::CKeyPosition;
   using CKeyPositionContainer = std::set<CKeyPosition>;
   using CLayoutContainer =
       std::map<CFinger, CKeyPositionContainer, CFinger::CStandardOrder>;
 
-public:
   CFingerLayout() = default;
   static CFingerLayout getDefault();
+  static CFingerLayout make(CLayoutContainer layout);
   CFinger find(CKeyPosition Position) const;
 
 private:

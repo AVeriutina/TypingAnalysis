@@ -57,6 +57,15 @@ CApplicationImpl::CApplicationImpl()
       StatisticsView_->localizerInput());
   LocalizationModule_->subscribeToFileMenuLocalizer(
       FileMenu_->localizerInput());
+  LocalizationModule_->subscribeToFingerLayoutLocalizer(
+      FingerLayoutModule_.localizerInput());
+  LocalizationModule_->subscribeToFingerLayoutLocalizer(
+      SettingsMenu_->localizerInput());
+
+  SettingsMenu_->subscribeToOpenFingerLayout(FingerLayoutModule_.showInput());
+
+  UserData_->subscribeToFingerLayout(FingerLayoutModule_.fingerLayoutInput());
+  FingerLayoutModule_.subscribeToSaveLayout(UserData_->fingerLayoutInput());
 
   StatisticsModule_->subscribeToStatisticsDescription(
       StatisticsView_->statisticsDescriptionInput());

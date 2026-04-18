@@ -47,6 +47,7 @@ public:
   QMenu* getFileMenu() const;
   CModifiersModeInitData getModifiersMenuInit() const;
   QMenu* getLanguageMenu() const;
+  QMenu* getSettingsMenu();
 
 Q_SIGNALS:
   bool closeMainWindow();

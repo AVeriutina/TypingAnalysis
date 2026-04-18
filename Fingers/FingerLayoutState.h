@@ -24,4 +24,3 @@ struct CFingerLayoutState {
 
 } // namespace NSFingers
 } // namespace NSApplication
-

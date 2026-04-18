@@ -63,6 +63,10 @@ QMenu* CMainWindow::getLanguageMenu() const {
   return ui_->menuLanguage;
 }
 
+QMenu* CMainWindow::getSettingsMenu() {
+  return menuBar()->addMenu(QString());
+}
+
 void CMainWindow::adjustStaticInterface() {
   adjustSplitters();
   adjustButtonGroups();

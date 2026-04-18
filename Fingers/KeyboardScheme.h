@@ -83,7 +83,7 @@ inline constexpr int kBottomEdge = kRow5Y + kKeyHeight;
 inline std::unordered_map<CKeyPosEnum::CType, QRect> createCommonKeys() {
   std::unordered_map<CKeyPosEnum::CType, QRect> layout;
 
-  // ── Row 1 ─────────────────────────────────────────────────────────────────
+  // Row 1
   int x = kStartX;
   int y = kRow1Y;
 
@@ -115,7 +115,7 @@ inline std::unordered_map<CKeyPosEnum::CType, QRect> createCommonKeys() {
   x += kKeyStep;
   layout[CKeyPosEnum::BKSP] = QRect(x, y, kBackspaceWidth, kKeyHeight);
 
-  // ── Row 2: TAB + QWERTY (no BKSL, no RTRN) ───────────────────────────────
+  // Row 2: TAB + QWERTY (no BKSL, no RTRN)
   x = kStartX;
   y = kRow2Y;
 
@@ -145,7 +145,7 @@ inline std::unordered_map<CKeyPosEnum::CType, QRect> createCommonKeys() {
   x += kKeyStep;
   layout[CKeyPosEnum::AD12] = QRect(x, y, kKeyWidth, kKeyHeight);
 
-  // ── Row 3: home row (no BKSL, no RTRN) ───────────────────────────────────
+  // Row 3: home row (no BKSL, no RTRN)
   x = kStartX;
   y = kRow3Y;
 
@@ -173,7 +173,7 @@ inline std::unordered_map<CKeyPosEnum::CType, QRect> createCommonKeys() {
   x += kKeyStep;
   layout[CKeyPosEnum::AC11] = QRect(x, y, kKeyWidth, kKeyHeight);
 
-  // ── Row 4: bottom row (no LFSH, no ISO_102) ──────────────────────────────
+  // Row 4: bottom row (no LFSH, no LSGT)
   x = kStartX + kLShiftWidth + kKeySpacing;
   y = kRow4Y;
 
@@ -199,7 +199,7 @@ inline std::unordered_map<CKeyPosEnum::CType, QRect> createCommonKeys() {
   x += kKeyStep;
   layout[CKeyPosEnum::RTSH] = QRect(x, y, kRShiftWidth, kKeyHeight);
 
-  // ── Row 5 ─────────────────────────────────────────────────────────────────
+  // Row 5
   x = kStartX;
   y = kRow5Y;
 
@@ -235,7 +235,7 @@ inline std::unordered_map<CKeyPosEnum::CType, QRect> createANSISpecificKeys() {
 }
 
 // ISO-specific keys: RTRN (L-shape bounding rect), BKSL (row 3 # key),
-// LFSH (narrow), ISO_102.
+// LFSH (narrow), LSGT.
 inline std::unordered_map<CKeyPosEnum::CType, QRect> createISOSpecificKeys() {
   const int rtrnX = kStartX + kTabWidth + kKeySpacing + 12 * kKeyStep;
   const int bkslX = kStartX + kCapsWidth + kKeySpacing + 11 * kKeyStep;

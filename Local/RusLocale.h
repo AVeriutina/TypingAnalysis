@@ -153,6 +153,7 @@ struct CRusLocale {
     static constexpr const char* Enter = "Enter";
     static constexpr const char* Shift = "Shift";
     static constexpr const char* Ctrl = "Ctrl";
+    static constexpr const char* SettingsMenu = "Настройки";
   };
 };
 
