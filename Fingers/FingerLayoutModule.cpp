@@ -47,7 +47,7 @@ void CFingerLayoutModule::changeCurrentFinger(CFinger new_finger) {
 
 void CFingerLayoutModule::changeButton(CKeyPosition button_for_change) {
   for (auto& [_, buttons_for_finger] : Layout_) {
-    if (!buttons_for_finger.contains(button_for_change)) {
+    if (buttons_for_finger.count(button_for_change) == 0) {
       continue;
     }
     buttons_for_finger.erase(button_for_change);

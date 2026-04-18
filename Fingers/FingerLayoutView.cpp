@@ -187,7 +187,7 @@ QPushButton* CFingerLayoutView::createKeyButton(CKeyPosEnum::CType keyPos,
 
   btn->setText(keyLabel(keyPos));
 
-  if (kSkippedButtons.contains(keyPos)) {
+  if (kSkippedButtons.count(keyPos) != 0) {
     btn->setDisabled(true);
   } else {
     QObject::connect(btn, &QPushButton::clicked,
@@ -204,7 +204,7 @@ void CFingerLayoutView::applyScheme(KeyboardType newType) {
       (newType == KeyboardType::ISO) ? makeISOScheme() : makeANSIScheme();
 
   for (auto it = ButtonsContainer_.begin(); it != ButtonsContainer_.end();) {
-    if (!newScheme.keys.contains(it->first)) {
+    if (newScheme.keys.count(it->first) == 0) {
       delete it->second;
       it = ButtonsContainer_.erase(it);
     } else {

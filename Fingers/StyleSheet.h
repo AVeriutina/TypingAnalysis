@@ -42,65 +42,65 @@ struct CButtonStyle {
 inline constexpr int kKeyFontSize = 22;
 
 inline CButtonStyle keyButtonStyle(const QColor& bg) {
-  return CButtonStyle{
-      .background = bg,
-      .border = QColor(136, 136, 136),
-      .borderWidth = 1,
-      .borderRadius = 4,
-      .fontSize = kKeyFontSize,
-      .bold = false,
-  };
+  CButtonStyle s;
+  s.background = bg;
+  s.border = QColor(136, 136, 136);
+  s.borderWidth = 1;
+  s.borderRadius = 4;
+  s.fontSize = kKeyFontSize;
+  s.bold = false;
+  return s;
 }
 
 inline CButtonStyle fingerButtonStyle(const QColor& bg, const QColor& border,
                                       int borderWidth, bool bold) {
-  return CButtonStyle{
-      .background = bg,
-      .border = border,
-      .borderWidth = borderWidth,
-      .borderRadius = 0,
-      .fontSize = 18,
-      .bold = bold,
-  };
+  CButtonStyle s;
+  s.background = bg;
+  s.border = border;
+  s.borderWidth = borderWidth;
+  s.borderRadius = 0;
+  s.fontSize = 18;
+  s.bold = bold;
+  return s;
 }
 
 inline CButtonStyle activeLayoutToggleStyle(const QColor& bg,
                                             const QColor& border,
                                             const QColor& text) {
-  return CButtonStyle{
-      .background = bg,
-      .border = border,
-      .borderWidth = 2,
-      .borderRadius = 4,
-      .fontSize = 15,
-      .bold = true,
-      .textColor = text,
-  };
+  CButtonStyle s;
+  s.background = bg;
+  s.border = border;
+  s.borderWidth = 2;
+  s.borderRadius = 4;
+  s.fontSize = 15;
+  s.bold = true;
+  s.textColor = text;
+  return s;
 }
 
 inline CButtonStyle inactiveLayoutToggleStyle(const QColor& bg,
                                               const QColor& border,
                                               const QColor& text) {
-  return CButtonStyle{
-      .background = bg,
-      .border = border,
-      .borderWidth = 1,
-      .borderRadius = 4,
-      .fontSize = 15,
-      .bold = false,
-      .textColor = text,
-  };
+  CButtonStyle s;
+  s.background = bg;
+  s.border = border;
+  s.borderWidth = 1;
+  s.borderRadius = 4;
+  s.fontSize = 15;
+  s.bold = false;
+  s.textColor = text;
+  return s;
 }
 
 inline CButtonStyle actionButtonStyle(const QColor& bg, const QColor& border) {
-  return CButtonStyle{
-      .background = bg,
-      .border = border,
-      .borderWidth = 1,
-      .borderRadius = 6,
-      .fontSize = 16,
-      .bold = true,
-  };
+  CButtonStyle s;
+  s.background = bg;
+  s.border = border;
+  s.borderWidth = 1;
+  s.borderRadius = 6;
+  s.fontSize = 16;
+  s.bold = true;
+  return s;
 }
 
 } // namespace NSViewDetails
