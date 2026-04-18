@@ -95,13 +95,6 @@ DEFINES += $$CONAN_DEFINES_BOOST
 
 
 HEADERS += \
-  Fingers/Coordinates.h \
-  Fingers/FingerLayoutController.h \
-  Fingers/FingerLayoutModule.h \
-  Fingers/FingerLayoutState.h \
-  Fingers/FingerLayoutView.h \
-  Fingers/FLModule.h \
-  Fingers/StyleSheet.h \
   AppDebug/PerformanceLogger.h \
   Compute/CudaDefines.h \
   Compute/Functions.h \
@@ -127,6 +120,14 @@ HEADERS += \
   Interface/TextModeController.h \
   Interface/TextModeView.h \
   Interface/TextPrinter.h \
+  Fingers/FingerLayoutController.h \
+  Fingers/FingerLayoutModule.h \
+  Fingers/FingerLayoutState.h \
+  Fingers/FingerLayoutView.h \
+  Fingers/FLModule.h \
+  Fingers/KeyboardScheme.h \
+  Fingers/LShapeButton.h \
+  Fingers/StyleSheet.h \
   Kernel/AnalyticData.h \
   Kernel/AnalyticalModule.h \
   Kernel/FingerLayout.h \
@@ -218,10 +219,6 @@ HEADERS += \
   TimerAccess.h
 
 SOURCES += \
-  Fingers/FingerLayoutController.cpp \
-  Fingers/FingerLayoutModule.cpp \
-  Fingers/FingerLayoutView.cpp \
-  Fingers/FLModule.cpp \
   AppDebug/PerformanceLogger.cpp \
   Compute/Functions.cpp \
   Compute/Math.cpp \
@@ -246,6 +243,11 @@ SOURCES += \
   Interface/TextModeController.cpp \
   Interface/TextModeView.cpp \
   Interface/TextPrinter.cpp \
+  Fingers/FingerLayoutController.cpp \
+  Fingers/FingerLayoutModule.cpp \
+  Fingers/FingerLayoutView.cpp \
+  Fingers/FLModule.cpp \
+  Fingers/LShapeButton.cpp \
   Kernel/AnalyticData.cpp \
   Kernel/AnalyticalModule.cpp \
   Kernel/FingerLayout.cpp \
