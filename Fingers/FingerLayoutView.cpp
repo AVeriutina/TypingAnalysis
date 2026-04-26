@@ -58,6 +58,23 @@ int CFingerLayoutView::actionRowY() const {
   return fingerPanelBottom() + LayoutScheme_.action_row_offset;
 }
 
+int CFingerLayoutView::windowWidth() const {
+  const int kbdW = CurrentScheme_.right_edge + LayoutScheme_.win_margin;
+  return std::max(kbdW, fingerPanelWidth() + LayoutScheme_.win_margin * 2);
+}
+
+int CFingerLayoutView::windowHeight() const {
+  return actionRowY() + LayoutScheme_.action_btn_h + LayoutScheme_.win_margin;
+}
+
+void CFingerLayoutView::setupWindow() {
+  Window_->setWindowTitle(windowTitle());
+  Window_->setCentralWidget(CentralWidget_);
+  CentralWidget_->setFixedSize(windowWidth(), windowHeight());
+  Window_->adjustSize();
+  Window_->setFixedSize(Window_->size());
+}
+
 CFingerLayoutView::CFingerLayoutView(QMainWindow* window)
     : FingerLayoutInput_(
           [this](const CFingerLayoutState& State) { drawState(State); }),
@@ -65,23 +82,13 @@ CFingerLayoutView::CFingerLayoutView(QMainWindow* window)
       Window_(window), CentralWidget_(new QWidget(Window_)) {
   assert(Window_);
   assert(CentralWidget_);
-  Window_->setWindowTitle("Fingers Layout");
-  Window_->setCentralWidget(CentralWidget_);
 
   applyScheme(KeyboardType::ANSI);
   buildFingerPanel();
   buildActionButtons();
   buildToggleButtons();
 
-  const int kbdW = CurrentScheme_.right_edge + LayoutScheme_.win_margin;
-  const int totalW =
-      std::max(kbdW, fingerPanelWidth() + LayoutScheme_.win_margin * 2);
-  const int totalH =
-      actionRowY() + LayoutScheme_.action_btn_h + LayoutScheme_.win_margin;
-
-  CentralWidget_->setFixedSize(totalW, totalH);
-  Window_->adjustSize();
-  Window_->setFixedSize(Window_->size());
+  setupWindow();
 }
 
 CFingerLayoutView::CViewObserver* CFingerLayoutView::FingerLayoutInput() {
@@ -126,7 +133,7 @@ void CFingerLayoutView::switchTo(KeyboardType type) {
 }
 
 void CFingerLayoutView::updateToggleButtons() {
-  const bool iso = (LastState_.keyboard_type == KeyboardType::ISO);
+  const bool iso = (CurrentKeyboardType_ == KeyboardType::ISO);
   ANSIButton_->setStyleSheet(
       (!iso ? NSViewDetails::activeLayoutToggleStyle(
                   Palette_.ToggleActiveBg, Palette_.ToggleActiveBorder,
@@ -156,12 +163,14 @@ void CFingerLayoutView::drawLayout(const CLayoutContainer& layout) {
 }
 
 void CFingerLayoutView::drawState(const CFingerLayoutState& State) {
-  const bool layoutChanged = (State.keyboard_type != LastState_.keyboard_type);
-  LastState_ = State;
-  if (layoutChanged)
+  if (State.keyboard_type != CurrentKeyboardType_)
     switchTo(State.keyboard_type);
   drawLayout(State.layout);
-  updateFingerPanel(State.current_finger);
+  if (State.current_finger.id() != CurrentFinger_.id()) {
+    updateFingerItem(CurrentFinger_, false);
+    CurrentFinger_ = State.current_finger;
+    updateFingerItem(CurrentFinger_, true);
+  }
 }
 
 QPushButton* CFingerLayoutView::createKeyButton(CKeyPosEnum::CType keyPos,
@@ -258,23 +267,23 @@ void CFingerLayoutView::buildToggleButtons() {
                    [this]() { KeyboardTypeOutput_.set(KeyboardType::ISO); });
 }
 
-void CFingerLayoutView::placeFingerGroup(
-    const std::vector<CFinger>& fingers, int x, int y,
-    const CFingerLayoutPalette::CFingerColorMap& colorMap) {
-  for (const CFinger& f : fingers) {
+void CFingerLayoutView::placeFingerGroup(CFingerGroup& group,
+                                         const std::vector<CFinger>& order,
+                                         int startX, int y) {
+  int x = startX;
+  for (const CFinger& f : order) {
     const QColor color =
-        colorMap.count(f) ? colorMap.at(f) : Palette_.UnassignedKey;
+        Palette_.Fingers.count(f) ? Palette_.Fingers.at(f) : Palette_.UnassignedKey;
     auto* btn = new QPushButton(CentralWidget_);
     assert(btn);
-    btn->setGeometry(x, y, LayoutScheme_.finger_btn_w,
-                     LayoutScheme_.finger_btn_h);
+    btn->setGeometry(x, y, LayoutScheme_.finger_btn_w, LayoutScheme_.finger_btn_h);
     btn->setText(fingerLabel(f));
     btn->setStyleSheet(NSViewDetails::fingerButtonStyle(
                            color, Palette_.FingerBorderInactive, 1, false)
                            .toStyleSheet());
     QObject::connect(btn, &QPushButton::clicked,
                      [this, f]() { FingerChangeOutput_.set(f); });
-    FingersContainer_[f] = btn;
+    group.push_back({f, btn, x});
     x += LayoutScheme_.finger_btn_w;
   }
 }
@@ -286,43 +295,52 @@ void CFingerLayoutView::buildFingerPanel() {
       leftX +
       static_cast<int>(leftFingers().size()) * LayoutScheme_.finger_btn_w +
       LayoutScheme_.hand_gap;
-  placeFingerGroup(leftFingers(), leftX, y, Palette_.Fingers);
-  placeFingerGroup(rightFingers(), rightX, y, Palette_.Fingers);
+  placeFingerGroup(LeftGroup_, leftFingers(), leftX, y);
+  placeFingerGroup(RightGroup_, rightFingers(), rightX, y);
 }
 
-int CFingerLayoutView::updateFingerGroup(const std::vector<CFinger>& fingers,
-                                         int x, CFinger currentFinger) {
-  for (const CFinger& f : fingers) {
-    auto it = FingersContainer_.find(f);
-    if (it == FingersContainer_.end()) {
-      x += LayoutScheme_.finger_btn_w;
-      continue;
+void CFingerLayoutView::applyFingerStyle(const CFingerItem& item, bool isCurrent) {
+  const int h =
+      isCurrent ? LayoutScheme_.finger_btn_h_sel : LayoutScheme_.finger_btn_h;
+  const QColor color = Palette_.Fingers.count(item.finger)
+                           ? Palette_.Fingers.at(item.finger)
+                           : Palette_.UnassignedKey;
+  const QColor border =
+      isCurrent ? Palette_.FingerBorderActive : Palette_.FingerBorderInactive;
+  const int bw = isCurrent ? 2 : 1;
+  item.button->setGeometry(item.base_x, fingerBtnTop(h),
+                            LayoutScheme_.finger_btn_w, h);
+  item.button->setText(fingerLabel(item.finger));
+  item.button->setStyleSheet(
+      NSViewDetails::fingerButtonStyle(color, border, bw, isCurrent)
+          .toStyleSheet());
+}
+
+void CFingerLayoutView::updateFingerItem(CFinger f, bool isCurrent) {
+  for (const auto& item : LeftGroup_) {
+    if (item.finger.id() == f.id()) {
+      applyFingerStyle(item, isCurrent);
+      return;
     }
-    const bool isCurrent = (f.id() == currentFinger.id());
-    const int h =
-        isCurrent ? LayoutScheme_.finger_btn_h_sel : LayoutScheme_.finger_btn_h;
-    const QColor color = Palette_.Fingers.count(f) ? Palette_.Fingers.at(f)
-                                                   : Palette_.UnassignedKey;
-    const QColor border =
-        isCurrent ? Palette_.FingerBorderActive : Palette_.FingerBorderInactive;
-    const int bw = isCurrent ? 2 : 1;
-
-    it->second->setGeometry(x, fingerBtnTop(h), LayoutScheme_.finger_btn_w, h);
-    it->second->setText(fingerLabel(f));
-    it->second->setStyleSheet(
-        NSViewDetails::fingerButtonStyle(color, border, bw, isCurrent)
-            .toStyleSheet());
-
-    x += LayoutScheme_.finger_btn_w;
   }
-  return x;
+  for (const auto& item : RightGroup_) {
+    if (item.finger.id() == f.id()) {
+      applyFingerStyle(item, isCurrent);
+      return;
+    }
+  }
 }
 
-void CFingerLayoutView::updateFingerPanel(CFinger currentFinger) {
-  int x = fingerPanelStartX();
-  x = updateFingerGroup(leftFingers(), x, currentFinger);
-  x += LayoutScheme_.hand_gap;
-  updateFingerGroup(rightFingers(), x, currentFinger);
+void CFingerLayoutView::updateFingerGroup(const CFingerGroup& group) {
+  for (const auto& item : group) {
+    const bool isCurrent = (item.finger.id() == CurrentFinger_.id());
+    applyFingerStyle(item, isCurrent);
+  }
+}
+
+void CFingerLayoutView::updateFingerPanel() {
+  updateFingerGroup(LeftGroup_);
+  updateFingerGroup(RightGroup_);
 }
 
 void CFingerLayoutView::buildActionButtons() {
@@ -362,8 +380,10 @@ void CFingerLayoutView::setLocale(const CLocalizer& /*localizer*/) {
   Window_->setWindowTitle(windowTitle());
   for (auto& [keyPos, btn] : ButtonsContainer_)
     btn->setText(keyLabel(keyPos));
-  for (auto& [finger, btn] : FingersContainer_)
-    btn->setText(fingerLabel(finger));
+  for (const auto& item : LeftGroup_)
+    item.button->setText(fingerLabel(item.finger));
+  for (const auto& item : RightGroup_)
+    item.button->setText(fingerLabel(item.finger));
   OkButton_->setText(ok());
   ResetButton_->setText(reset());
   CancelButton_->setText(cancel());

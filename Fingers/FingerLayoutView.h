@@ -78,8 +78,13 @@ class CFingerLayoutView {
   using CLocalizerInput = NSLibrary::CHotInput<CLocalizer>;
 
   using CButtonsContainer = std::unordered_map<CKeyPosition, QPushButton*>;
-  using CFingersContainer =
-      std::map<CFinger, QPushButton*, CFinger::CStandardOrder>;
+
+  struct CFingerItem {
+    CFinger finger;
+    QPushButton* button;
+    int base_x;
+  };
+  using CFingerGroup = std::vector<CFingerItem>;
 
 public:
   explicit CFingerLayoutView(QMainWindow* window);
@@ -99,12 +104,13 @@ private:
   QPushButton* createKeyButton(CKeyPosEnum::CType keyPos, const QRect& rect);
   void colorKeyButton(CKeyPosition pos, const QColor& color);
   void updateToggleButtons();
-  void placeFingerGroup(const std::vector<CFinger>& fingers, int x, int y,
-                        const CFingerLayoutPalette::CFingerColorMap& colorMap);
+  void placeFingerGroup(CFingerGroup& group, const std::vector<CFinger>& order,
+                        int startX, int y);
   void buildFingerPanel();
-  void updateFingerPanel(CFinger currentFinger);
-  int updateFingerGroup(const std::vector<CFinger>& fingers, int x,
-                        CFinger currentFinger);
+  void updateFingerPanel();
+  void updateFingerGroup(const CFingerGroup& group);
+  void updateFingerItem(CFinger f, bool isCurrent);
+  void applyFingerStyle(const CFingerItem& item, bool isCurrent);
   void buildActionButtons();
   void buildToggleButtons();
   QPushButton* makeActionButton(const char* label, int x, int y,
@@ -115,6 +121,9 @@ private:
   int fingerPanelWidth() const;
   int fingerPanelStartX() const;
   int actionRowY() const;
+  int windowWidth() const;
+  int windowHeight() const;
+  void setupWindow();
 
   void setLocale(const CLocalizer& localizer);
   QString windowTitle() const;
@@ -137,7 +146,9 @@ private:
   CFingerLayoutScheme LayoutScheme_;
 
   CButtonsContainer ButtonsContainer_;
-  CFingersContainer FingersContainer_;
+  CFingerGroup LeftGroup_;
+  CFingerGroup RightGroup_;
+  CFinger CurrentFinger_;
 
   QMainWindow* Window_;
   QWidget* CentralWidget_;
@@ -147,7 +158,6 @@ private:
   QPushButton* ANSIButton_;
   QPushButton* ISOButton_;
 
-  CFingerLayoutState LastState_;
 };
 
 } // namespace NSFingers
